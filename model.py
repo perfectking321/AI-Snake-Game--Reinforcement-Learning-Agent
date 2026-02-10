@@ -17,9 +17,9 @@ class Linear_QNet(nn.Module):
         x = self.linear2(x)
         return x
     
-    def save(self, file_name='model.pth', record=0, n_games=0, mean_score=0.0):
+    def save(self, file_name='model.pth', record=0, n_games=0, mean_score=0.0, folder='./model'):
         """Save model with metadata"""
-        model_folder_path = './model'
+        model_folder_path = folder
         if not os.path.exists(model_folder_path):
             os.makedirs(model_folder_path)
 
@@ -46,9 +46,9 @@ class Linear_QNet(nn.Module):
         
         print(f'Model saved! Record: {record}, Games: {n_games}, Mean Score: {mean_score:.2f}')
     
-    def load(self, file_name='model.pth'):
+    def load(self, file_name='model.pth', folder='./model'):
         """Load model weights"""
-        model_folder_path = './model'
+        model_folder_path = folder
         file_path = os.path.join(model_folder_path, file_name)
         
         if os.path.exists(file_path):

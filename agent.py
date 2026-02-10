@@ -34,24 +34,31 @@ class Agent:
         metadata_path = os.path.join(model_folder_path, 'metadata.json')
         
         # Try to load the model
-        if self.model.load():
-            # Load metadata if exists
-            if os.path.exists(metadata_path):
-                try:
-                    with open(metadata_path, 'r') as f:
-                        metadata = json.load(f)
-                        self.record = metadata.get('record', 0)
-                        self.n_games = metadata.get('n_games', 0)
-                        print(f'\n=== Resuming Training ===')
-                        print(f'Previous Record: {self.record}')
-                        print(f'Games Played: {self.n_games}')
-                        print(f'Previous Mean Score: {metadata.get("mean_score", 0):.2f}')
-                        print(f'Last Training: {metadata.get("timestamp", "Unknown")}')
-                        print('========================\n')
-                except Exception as e:
-                    print(f'Error loading metadata: {e}')
-        else:
-            print('No previous model found. Starting fresh training.')
+        try:
+            if self.model.load():
+                # Load metadata if exists
+                if os.path.exists(metadata_path):
+                    try:
+                        with open(metadata_path, 'r') as f:
+                            metadata = json.load(f)
+                            self.record = metadata.get('record', 0)
+                            self.n_games = metadata.get('n_games', 0)
+                            print(f'\n=== Resuming Training ===')
+                            print(f'Previous Record: {self.record}')
+                            print(f'Games Played: {self.n_games}')
+                            print(f'Previous Mean Score: {metadata.get("mean_score", 0):.2f}')
+                            print(f'Last Training: {metadata.get("timestamp", "Unknown")}')
+                            print('========================\n')
+                    except Exception as e:
+                        print(f'Error loading metadata: {e}')
+            else:
+                print('No previous model found. Starting fresh training.')
+        except RuntimeError as e:
+            if "size mismatch" in str(e):
+                print('\n⚠️  Saved model incompatible (size mismatch - may be from hybrid agent)')
+                print('Starting fresh training with pure AI agent.\n')
+            else:
+                raise
 
 
     def get_state(self,game):

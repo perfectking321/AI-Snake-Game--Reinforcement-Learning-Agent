@@ -84,12 +84,13 @@ class SnakeGameAI:
         wall_collision = self._is_wall_collision(self.head)
         tail_collision = self._is_tail_collision(self.head)
         
-        if wall_collision or tail_collision or self.frame_iteration > 100*len(self.snake):
+        # Removed timeout check (100*len(self.snake)) to allow Hamiltonian cycle to complete
+        if wall_collision or tail_collision:
             game_over = True
             if tail_collision:
                 reward = -15  # Stronger penalty for biting tail (harder to avoid)
             else:
-                reward = -10  # Wall collision or timeout
+                reward = -10  # Wall collision
             return reward, game_over, self.score
             
         # 4. place new food or just move
