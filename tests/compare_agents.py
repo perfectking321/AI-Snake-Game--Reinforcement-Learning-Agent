@@ -5,6 +5,8 @@ Run side-by-side comparison
 
 import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from game import SnakeGameAI
 
 # Import both agents

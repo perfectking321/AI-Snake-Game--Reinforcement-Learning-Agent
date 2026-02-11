@@ -1,7 +1,11 @@
-"""
+""" 
 Quick Visual Test - Shows Hamiltonian cycle path
 No pygame window needed - ASCII visualization
 """
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from hamiltonian_path import HamiltonianPath, Point, Direction
 

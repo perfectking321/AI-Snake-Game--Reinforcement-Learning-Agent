@@ -8,7 +8,7 @@ import os
 from collections import namedtuple
 
 # Add project to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from hamiltonian_path import HamiltonianPath, Direction, Point
 
